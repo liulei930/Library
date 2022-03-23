@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.IStudentDao">
+    <!--根据账号密码查询-->
+    <select id="login" resultType="com.domain.Student" parameterType="com.domain.Student">
+     select * from student where no=#{account} and password=#{password}
+</select>
+    <!--查询所有学生-->
+    <select id="findAll" resultType="com.domain.Student">
+        select * from student
+    </select>
+    <!--添加学生-->
+    <insert id="save" parameterType="com.domain.Student">
+        insert into student(no,name,sex,grade,major,phone,password)values(#{no},#{name},#{sex},#{grade},#{major},#{phone},#{password})
+    </insert>
+    <!--删除指定id的学生-->
+    <delete id="delete" parameterType="com.domain.Student">
+        delete  from student where  sid=#{id}
+    </delete>
+    <!--查找指定id的学生-->
+    <select id="findById" parameterType="com.domain.Student" resultType="com.domain.Student">
+        select * from student where sid=#{id}
+    </select>
+    <!--更新指定id的学生信息-->
+    <update id="update" parameterType="com.domain.Student">
+        update  student set grade=#{grade},major=#{major},phone=#{phone},password=#{password} where sid=#{sid}
+    </update>
+    <!--更新密码-->
+    <update id="updatePassword" parameterType="com.domain.Student">
+        update  student set password=#{password} where sid=#{sid}
+    </update>
+    <!--根据名字查找学生-->
+    <select id="findByName" parameterType="com.domain.Student" resultType="com.domain.Student">
+        select * from student where name=#{name}
+    </select>
+</mapper>

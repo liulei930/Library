@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.IBookDao">
+<!--查询所有图书-->
+    <select id="findAll" resultType="com.domain.Book">
+        select *from book
+    </select>
+    <!--根据图书类型查询-->
+    <select id="findByType" resultType="com.domain.Book">
+        select * from  book where type=#{type}
+    </select>
+    <!--保存图书-->
+    <insert id="saveBook" parameterType="com.domain.Book">
+        insert into book(name,writer,type,pub)values(#{name},#{writer},#{type},#{pub})
+    </insert>
+    <!--删除图书-->
+    <delete id="deleteBook" parameterType="Integer">
+        delete from book where id=#{id}
+    </delete>
+    <!--修改书籍-->
+    <update id="updateBook" parameterType="com.domain.Book" >
+        update book set name=#{name},writer=#{writer},type=#{type},pub=#{pub} where bid=#{bid}
+    </update>
+    <!--根据id查询-->
+    <select id="findById" parameterType="Integer" resultType="com.domain.Book">
+        select * from book where bid=#{bid}
+    </select>
+<!--根据名字查询-->
+    <select id="findByName" resultType="com.domain.Book" parameterType="String">
+        select * from book where name=#{name}
+    </select>
+    <!--根据名字模糊查询-->
+    <select id="findMoHu" resultType="com.domain.Book" parameterType="String">
+        select * from book where name='%${name}%'
+    </select>
+</mapper>

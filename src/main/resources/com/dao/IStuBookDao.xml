@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.IStuBookDao">
+    <!--借书操作，插入记录-->
+    <insert id="save" parameterType="com.domain.StudentBook" >
+        insert into stu_book(stuId,bookId,borrowTime,returnTime,deadTime)values(#{stuId},#{bookId},#{borrowTime},#{returnTime},#{deadTime})
+    </insert>
+    <!--删除一条借阅表的记录-->
+    <delete id="delete">
+        delete from stu_book where id=#{id}
+    </delete>
+    <!--根据学生id查找当前借阅书籍，还书时间为空-->
+    <resultMap id="stuAndBook" type="com.domain.StudentBook">
+            <result property="id" column="id"></result>
+            <result property="stuId" column="stuId"></result>
+            <result property="bookId" column="bookId"></result>
+            <result property="borrowTime" column="borrowTime"></result>
+            <result property="deadTime" column="deadTime"></result>
+            <result property="returnTime" column="returnTime"></result>
+        <association property="book" javaType="com.domain.Book">
+            <result property="bid" column="bid"></result>
+            <result property="name" column="name"></result>
+        </association>
+    </resultMap>
+    <select id="findBookByStuId" parameterType="Integer" resultMap="stuAndBook">
+        SELECT  b.*,sb.* FROM student s JOIN stu_book sb on sb.stuId=s.sid join book b on b.bid=sb.bookId
+        where  sb.returnTime is NULL and sb.stuId=#{studentId}
+    </select>
+    <!--更新记录-->
+    <update id="update" parameterType="com.domain.StudentBook">
+        update stu_book set  returnTime=#{returnTime} where  id=#{id}
+    </update>
+    <!--查找指定学生的借阅记录-->
+    <select id="findHistoryByStuId" parameterType="Integer" resultMap="stuAndBook">
+        SELECT  b.*,sb.* FROM student s JOIN stu_book sb on sb.stuId=s.sid join book b on b.bid=sb.bookId
+        where  sb.returnTime is Not Null and sb.stuId=#{studentId}
+    </select>
+    <!--续借-->
+    <update id="updateXuJie" parameterType="com.domain.StudentBook">
+        update stu_book set deadTime=#{deadTime} where id=#{id}
+    </update>
+      <!--根据学生id查询-->
+    <select id="findById" parameterType="Integer" resultType="com.domain.StudentBook">
+        select * from stu_book where id=#{stuBookId}
+    </select>
+    <select id="lateBook" resultType="com.domain.StudentBook" parameterType="Integer">
+        select * from stu_book where deadTime-NOW() <![CDATA[<]]> 0 and stuId=#{studentId}
+    </select>
+    <!--查找借阅表所有的记录-->
+    <resultMap id="stuBook" type="com.domain.StudentBook">
+        <result property="id" column="id"></result>
+        <result property="stuId" column="stuId"></result>
+        <result property="bookId" column="bookId"></result>
+        <result property="borrowTime" column="borrowTime"></result>
+        <result property="deadTime" column="deadTime"></result>
+        <result property="returnTime" column="returnTime"></result>
+        <association property="book" javaType="com.domain.Book">
+            <result property="bid" column="bid"></result>
+            <result property="name" column="name"></result>
+        </association>
+    </resultMap>
+    <select id="findAll" resultMap="stuBook">
+        SELECT sb.*,b.* from student s JOIN stu_book  sb on sb.stuId=s.sid join book b on b.bid=sb.bookId
+    </select>
+</mapper>
