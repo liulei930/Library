@@ -63,7 +63,7 @@ public class AdminController {
         PageHelper.startPage(1,4);
         PageInfo pageInfo = new PageInfo(adminList);
         mv.addObject("pageInfo",pageInfo);
-        mv.setViewName("/student/admin-add");
+        mv.setViewName("/student/addAdmin");
         return mv;
     }
     /**

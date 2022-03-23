@@ -16,23 +16,23 @@
         insert into book(name,writer,type,pub)values(#{name},#{writer},#{type},#{pub})
     </insert>
     <!--删除图书-->
-    <delete id="deleteBook" parameterType="Integer">
-        delete from book where id=#{id}
+    <delete id="deleteBook">
+        delete from book where bid=#{id}
     </delete>
     <!--修改书籍-->
-    <update id="updateBook" parameterType="com.domain.Book" >
+    <update id="updateBook">
         update book set name=#{name},writer=#{writer},type=#{type},pub=#{pub} where bid=#{bid}
     </update>
     <!--根据id查询-->
-    <select id="findById" parameterType="Integer" resultType="com.domain.Book">
+    <select id="findById" resultType="com.domain.Book">
         select * from book where bid=#{bid}
     </select>
 <!--根据名字查询-->
-    <select id="findByName" resultType="com.domain.Book" parameterType="String">
-        select * from book where name=#{name}
+    <select id="findByName" resultType="com.domain.Book">
+        select * from book where name like concat('%',#{name},'%')
     </select>
     <!--根据名字模糊查询-->
-    <select id="findMoHu" resultType="com.domain.Book" parameterType="String">
-        select * from book where name='%${name}%'
+    <select id="findMoHu" resultType="com.domain.Book">
+        select * from book where name like concat('%',#{name},'%')
     </select>
 </mapper>

@@ -12,6 +12,7 @@ import com.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -341,7 +342,7 @@ public class StudentController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/findByName")
+    @PostMapping("/findByName")
     public ModelAndView findByName(@RequestParam(name = "name") String name) throws Exception {
         ModelAndView mv = new ModelAndView();
         String message;

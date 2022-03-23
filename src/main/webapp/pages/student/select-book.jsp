@@ -102,8 +102,8 @@
 							<input type="submit" value="查询">
 							</form></div>
 							<div class="pull-right">
-								<form action="${pageContext.request.contextPath}/students/findByBName">
-								按照名字查询:<input type="text" name="type" value="${error}">
+								<form action="${pageContext.request.contextPath}/books/findByName" method="post">
+								按照名字查询:<input type="text" name="name" value="${error}">
 									<input type="submit" value="查询">
 								</form>
 							</select>
