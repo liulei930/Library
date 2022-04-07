@@ -28,7 +28,8 @@
             from admin
     </select>
     <select id="findByName" resultType="com.domain.Admin">
-        select * from admin where name like concat('%',#{name},'%')
+        SELECT * FROM admin
+        WHERE id IN (SELECT id FROM admin WHERE `name` LIKE CONCAT(#{name},'%'))
     </select>
     <select id="getAllAdmin" resultType="com.domain.Admin">
         select *

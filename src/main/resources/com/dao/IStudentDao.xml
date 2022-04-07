@@ -12,8 +12,8 @@
     </select>
     <!--查询所有学生-->
     <select id="findAll" resultType="com.domain.Student">
-        select *
-        from student
+        SELECT *
+                FROM student WHERE sid > '0'
     </select>
     <!--添加学生-->
     <insert id="save" parameterType="com.domain.Student">
@@ -49,8 +49,7 @@
     </update>
     <!--根据名字查找学生-->
     <select id="findByName" parameterType="com.domain.Student" resultType="com.domain.Student">
-        select *
-        from student
-        where name like concat('%',#{name},'%')
+        SELECT * FROM student
+        WHERE sid IN (SELECT sid FROM student WHERE `name` LIKE CONCAT(#{name},'%'))
     </select>
 </mapper>
